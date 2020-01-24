@@ -1,5 +1,5 @@
 expo init
-expo install expo-
+expo install expo-font
 
 npm install --save react-navigation
 
