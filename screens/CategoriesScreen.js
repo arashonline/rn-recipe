@@ -11,6 +11,9 @@ const CategoriesScreen = props => {
           routeName:'CategoryMeals'
         })
       }} />
+      <Button title='To Meals Replace' onPress={()=>{
+        props.navigation.replace('CategoryMeals')
+      }} />
     </View>
   );
 };
