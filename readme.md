@@ -17,3 +17,9 @@ npm install --save @expo/vector-icons
 
 to use tabs navigation
 react-navigation-tabs
+
+to make tabs look better on android devices
+npm install react-navigation-material-bottom-tabs
+
+also install react-native-paper
+npm install react-native-paper
