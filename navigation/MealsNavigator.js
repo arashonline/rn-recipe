@@ -1,3 +1,4 @@
+import React from 'react'
 import { Platform } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -10,6 +11,7 @@ import MealDetailScreen from "../screens/MealDetailScreen";
 import FavoritesScreen from '../screens/FavoritesScreen'
 
 import Colors from "../constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
 
 // we declare different screens we want to move between
 const MealsNavigator = createStackNavigator(
@@ -47,8 +49,23 @@ const MealsNavigator = createStackNavigator(
 const MealsFavTabNavigator = createBottomTabNavigator({
   // first setup an identifier like Meals
   // screen should take a react component
-  Meals:MealsNavigator,
-  Favorites:FavoritesScreen
+  Meals:{screen:MealsNavigator,
+  navigationOptions:{
+    tabBarIcon: (tabInfo)=>{
+      return <Ionicons name="ios-restaurant" size={25} color={tabInfo.tintColor}/>
+    }
+  }},
+  Favorites:{screen:FavoritesScreen,
+  navigationOptions:{
+    tabBarLabel: 'My Favorites',
+    tabBarIcon: (tabInfo)=>{
+      return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor}/>
+    }
+  }}
+},{
+  tabBarOptions:{
+    activeTintColor: Colors.secondary
+  }
 });
 
 // wrap the root (most important) navigator in createAppContainer
