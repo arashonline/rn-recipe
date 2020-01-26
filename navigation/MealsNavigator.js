@@ -15,6 +15,13 @@ import FavoritesScreen from "../screens/FavoritesScreen";
 
 import Colors from "../constants/Colors";
 
+const defaultStackNavOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primary : ""
+  },
+  headerTintColor: "black"
+};
+
 // we declare different screens we want to move between
 const MealsNavigator = createStackNavigator(
   {
@@ -39,12 +46,24 @@ const MealsNavigator = createStackNavigator(
   },
   {
     initialRouteName: "Categories",
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform.OS === "android" ? Colors.primary : ""
-      },
-      headerTintColor: "black"
+    defaultNavigationOptions: defaultStackNavOptions
+  }
+);
+
+const FavoritesNavigator = createStackNavigator(
+  {
+    Favorites: {
+      screen: FavoritesScreen,
+      headerTitle: "My Favorites"
+    }, 
+    MealDetail: {
+      screen: MealDetailScreen,
+      headerTitle: "Meal Details"
     }
+  },
+  {
+    initialRouteName: "Favorites",
+    defaultNavigationOptions: defaultStackNavOptions 
   }
 );
 
@@ -67,7 +86,7 @@ const tabScreenConfig = {
     }
   },
   Favorites: {
-    screen: FavoritesScreen,
+    screen: FavoritesNavigator,
     navigationOptions: {
       tabBarLabel: "My Favorites",
       tabBarIcon: tabInfo => {
