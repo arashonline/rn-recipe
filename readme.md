@@ -8,3 +8,9 @@ expo install react-native-safe-area-view react-native-safe-area-context
 expo install @react-native-community/masked-view
 
 npm install --save react-native-screens
+
+make it really easy to add buttons to header
+npm install --save react-navigation-header-buttons
+
+to install icon packages
+npm install --save @expo/vector-icons
