@@ -14,3 +14,6 @@ npm install --save react-navigation-header-buttons
 
 to install icon packages
 npm install --save @expo/vector-icons
+
+to use tabs navigation
+react-navigation-tabs
