@@ -9,6 +9,9 @@ import DefaultStackNavOptions from "./DefaultStackNavOptions";
 const FiltersNavigator = createStackNavigator({
     Filters: FiltersScreen
   },{
+    // navigationOptions: {
+    //   drawerLabel: 'Filter!'
+    // },
     defaultNavigationOptions: DefaultStackNavOptions
   })
 
