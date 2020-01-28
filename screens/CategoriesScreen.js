@@ -1,52 +1,63 @@
 import React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Platform
-} from "react-native";
-import CategoryMealScreen from "./CategoryMealsScreen";
+import { FlatList } from "react-native";
+
 import { CATEGORIES } from "../data/dummy";
-import Colors from "../constants/Colors";
-import CategoryGridTile from '../components/CategoryGridTile'
+import CategoryGridTile from "../components/CategoryGridTile";
+
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
+import HeaderButton from "../components/HeaderButton";
 
 const CategoriesScreen = props => {
   const renderGridItem = itemData => {
     return (
-      <CategoryGridTile 
-      title={itemData.item.title}
-      color={itemData.item.color}
-      onSelect={()=>{
-        props.navigation.navigate({
-          routeName: 'CategoryMeals',
-          params:{
-            categoryId: itemData.item.id
-          }
-        })
-      }}
+      <CategoryGridTile
+        title={itemData.item.title}
+        color={itemData.item.color}
+        onSelect={() => {
+          props.navigation.navigate({
+            routeName: "CategoryMeals",
+            params: {
+              categoryId: itemData.item.id
+            }
+          });
+        }}
       />
     );
   };
+
+  CategoriesScreen.navigationOptions = navData => {
+    return {
+      headerTitle: 'Meal Categories',
+      headerLeft: ()=>(
+        // <HeaderButtonNav navigation={navData.navigation} />
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Menu"
+            iconName="ios-menu"
+            onPress={() => {
+             navData.navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      )
+    };
+  };
+
+  // CategoriesScreen.navigationOptions =  {  
+  //   headerTitle: ()=>"Meal Categories",
+  //   headerLeft:()=>{
+  //     return (   <HeaderButtons HeaderButtonComponent={HeaderButton}>
+  //       <Item title="Menu" iconName="ios-star" onPress={() => {console.log('clicked')}} />
+  //     </HeaderButtons>)
+  //   }
+  // }
+
+ 
 
   return (
     <FlatList data={CATEGORIES} renderItem={renderGridItem} numColumns={2} />
   );
 };
-
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  gridItem: {
-    flex: 1,
-    margin: 15,
-    height: 150
-  }
-});
 
 export default CategoriesScreen;

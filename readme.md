@@ -23,3 +23,6 @@ npm install react-navigation-material-bottom-tabs
 
 also install react-native-paper
 npm install react-native-paper
+
+for drawer navigation
+npm install --save react-navigation-drawer

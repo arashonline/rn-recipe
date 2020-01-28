@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
 import {useScreens} from 'react-native-screens';
 
-import MealsNavigator from './navigation/MealsNavigator';
+import MainNavigator from './navigation/MainNavigator';
 
 // call useScreen after import navigator before anything else
 
@@ -31,6 +30,6 @@ export default function App() {
   }
 
   return (
-    <MealsNavigator />
+    <MainNavigator />
   );
 }

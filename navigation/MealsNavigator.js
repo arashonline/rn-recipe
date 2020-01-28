@@ -1,34 +1,24 @@
-import React from "react";
-import { Platform } from "react-native";
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
-import { Ionicons } from "@expo/vector-icons";
+import React from 'react'
+import { Platform } from "react-native";
+import { createStackNavigator } from "react-navigation-stack";
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
+import HeaderButton from "../components/HeaderButton";
 
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 
-import FavoritesScreen from "../screens/FavoritesScreen";
+
 
 import Colors from "../constants/Colors";
-
-const defaultStackNavOptions = {
-  headerStyle: {
-    backgroundColor: Platform.OS === "android" ? Colors.primary : ""
-  },
-  headerTintColor: "black"
-};
+import defaultStackNavOptions from "./DefaultStackNavOptions";
 
 // we declare different screens we want to move between
 const MealsNavigator = createStackNavigator(
   {
-    Categories: {
-      screen: CategoriesScreen,
-      headerTitle: "Meal Categories"
-    },
+    Categories: CategoriesScreen,
     CategoryMeals: {
       screen: CategoryMealsScreen,
       headerTitle: "Meals Of Category",
@@ -50,79 +40,9 @@ const MealsNavigator = createStackNavigator(
   }
 );
 
-const FavoritesNavigator = createStackNavigator(
-  {
-    Favorites: {
-      screen: FavoritesScreen,
-      headerTitle: "My Favorites"
-    }, 
-    MealDetail: {
-      screen: MealDetailScreen,
-      headerTitle: "Meal Details"
-    }
-  },
-  {
-    initialRouteName: "Favorites",
-    defaultNavigationOptions: defaultStackNavOptions 
-  }
-);
 
-const tabScreenConfig = {
-  // first setup an identifier like Meals
-  // screen should take a react component
-  Meals: {
-    screen: MealsNavigator,
-    navigationOptions: {
-      tabBarIcon: tabInfo => {
-        return (
-          <Ionicons
-            name="ios-restaurant"
-            size={25}
-            color={tabInfo.tintColor}
-          />
-        );
-      },
-      tabBarColor: Colors.primary
-    }
-  },
-  Favorites: {
-    screen: FavoritesNavigator,
-    navigationOptions: {
-      tabBarLabel: "My Favorites",
-      tabBarIcon: tabInfo => {
-        return (
-          <Ionicons
-            name="ios-star"
-            size={25}
-            color={tabInfo.tintColor}
-          />
-        );
-      },
-      tabBarColor: Colors.tinted
-    }
-  }
-};
-
-const MealsFavTabNavigator =
-  Platform.OS === "android"
-    ? createMaterialBottomTabNavigator(tabScreenConfig,
-      {
-        activeColor: Colors.secondary,
-        shifting:true,
-        barStyle:{
-          backgroundColor:Colors.primary
-        }
-      })
-    : createBottomTabNavigator(tabScreenConfig,
-      {
-        tabBarOptions: {
-          activeTintColor: Colors.secondary
-        }
-      }
-        
-      );
 
 // wrap the root (most important) navigator in createAppContainer
 
 // using MealsFavTabNavigator instead of MealsNavigator because it already has MealsNavigator in it
-export default createAppContainer(MealsFavTabNavigator);
+export default MealsNavigator;
