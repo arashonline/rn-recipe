@@ -6,6 +6,12 @@ const DefaultStackNavOptions = {
     headerStyle: {
       backgroundColor: Platform.OS === "android" ? Colors.primary : ""
     },
+    headerBackTitleStyle:{
+      fontFamily:'open-sans'
+    },
+    headerTitleStyle:{
+      fontFamily: 'open-sans-bold',
+    },
     headerTintColor: "black"
   };
 
