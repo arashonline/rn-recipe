@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import { View, Text,FlatList, StyleSheet } from 'react-native';
 import { CATEGORIES } from '../data/dummy';
 import MealList from '../components/MealList';
+import DefaultText from '../components/DefaultText';
 
 const CategoryMealScreen = props => {
 
@@ -13,7 +14,15 @@ const CategoryMealScreen = props => {
 
   const displayedMeals = availableMeals.filter(meal => meal.categoryIds.indexOf(categoryId) >=0)
 
-  return <MealList listData={displayedMeals} navigation={props.navigation}/>;
+  if(displayedMeals.length ===0){
+    <View style={styles.content}>
+    <DefaultText>No Meals Found, Check The Filters.</DefaultText>
+    </View>
+  }else{
+    return <MealList listData={displayedMeals} navigation={props.navigation}/>;
+  }
+
+  
 };
 
 CategoryMealScreen.navigationOptions = navigationData=>{  
@@ -27,6 +36,11 @@ CategoryMealScreen.navigationOptions = navigationData=>{
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  content:{
+    flex:1,
     justifyContent: 'center',
     alignItems: 'center'
   }
