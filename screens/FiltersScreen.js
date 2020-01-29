@@ -1,39 +1,81 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, Switch, Platform } from "react-native";
 
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import Colors from "../constants/Colors";
 
-const FilterSwitch = props =>{
-  return (<View style={styles.filterContainer}>
-    <Text>{props.label}</Text>
-    <Switch
-      trackColor={{
-        true: Colors.primary
-      }}
-      // thumbColor={Platform.OS==='android'? Colors.primary:''}
-      value={props.state}
-      onValueChange={props.onChange}
-    />
-  </View>);
-}
+const FilterSwitch = props => {
+  return (
+    <View style={styles.filterContainer}>
+      <Text>{props.label}</Text>
+      <Switch
+        trackColor={{
+          true: Colors.primary
+        }}
+        // thumbColor={Platform.OS==='android'? Colors.primary:''}
+        value={props.state}
+        onValueChange={props.onChange}
+      />
+    </View>
+  );
+};
 
 const FiltersScreen = props => {
+  const { navigation } = props;
+
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
 
+  // we use useCallback function to define which value might change
+  const saveFilters = useCallback(() => {
+    const appliedFilters = {
+      glutenFree: isGlutenFree,
+      lactoseFree: isLactoseFree,
+      vegan: isVegan,
+      vegetarian: isVegetarian
+    };
+
+    console.log(appliedFilters);
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+
+  // if any of values in second parameter of useCallback change
+  // then saveFilters will change
+  // and then useEffect will trigged
+  useEffect(() => {
+    // props.navigation.setParams({
+    // because of destructuring of navigation
+    navigation.setParams({
+      save: saveFilters
+    });
+  }, [saveFilters]);
 
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Available Filters / Restrictions</Text>
-      
-      <FilterSwitch label="Gluten-Free" state={isGlutenFree} onChange={newValue=> setIsGlutenFree(newValue)} />
-      <FilterSwitch label="Lactose-Free" state={isLactoseFree} onChange={newValue=> setIsLactoseFree(newValue)} />
-      <FilterSwitch label="Vegan" state={isVegan} onChange={newValue=> setIsVegan(newValue)} />
-      <FilterSwitch label="Vegetarian" state={isVegetarian} onChange={newValue=> setIsVegetarian(newValue)} />
+
+      <FilterSwitch
+        label="Gluten-Free"
+        state={isGlutenFree}
+        onChange={newValue => setIsGlutenFree(newValue)}
+      />
+      <FilterSwitch
+        label="Lactose-Free"
+        state={isLactoseFree}
+        onChange={newValue => setIsLactoseFree(newValue)}
+      />
+      <FilterSwitch
+        label="Vegan"
+        state={isVegan}
+        onChange={newValue => setIsVegan(newValue)}
+      />
+      <FilterSwitch
+        label="Vegetarian"
+        state={isVegetarian}
+        onChange={newValue => setIsVegetarian(newValue)}
+      />
     </View>
   );
 };
@@ -52,7 +94,16 @@ FiltersScreen.navigationOptions = navData => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
+    headerRight: () => {
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Save"
+          iconName="ios-save"
+          onPress={navData.navigation.getParam("save")}
+        />
+      </HeaderButtons>;
+    }
   };
 };
 
@@ -72,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "80%",
-    marginVertical:5
+    marginVertical: 5
   }
 });
 
