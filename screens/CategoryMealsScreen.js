@@ -1,13 +1,17 @@
 import React from 'react';
+// we using a hook to get data using redux
+import {useSelector} from 'react-redux';
 import { View, Text,FlatList, StyleSheet } from 'react-native';
-import { CATEGORIES , MEALS} from '../data/dummy';
+import { CATEGORIES } from '../data/dummy';
 import MealList from '../components/MealList';
 
 const CategoryMealScreen = props => {
 
   const categoryId = props.navigation.getParam('categoryId');
 
-  const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(categoryId) >=0)
+  const availableMeals = useSelector(state => state.meals.filteredMeals)
+
+  const displayedMeals = availableMeals.filter(meal => meal.categoryIds.indexOf(categoryId) >=0)
 
   return <MealList listData={displayedMeals} navigation={props.navigation}/>;
 };
