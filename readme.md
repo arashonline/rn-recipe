@@ -29,3 +29,5 @@ npm install --save react-navigation-drawer
 
 for state management using redux
 npm install --save redux react-redux
+
+npm install --save moment

@@ -4,11 +4,24 @@ import { AppLoading } from 'expo';
 
 import {useScreens} from 'react-native-screens';
 
-import MainNavigator from './navigation/MainNavigator';
+import { createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
 
+import MainNavigator from './navigation/MainNavigator';
+import mealsReducer from './store/reducers/meals';
 // call useScreen after import navigator before anything else
 
 useScreens();
+
+
+// mapping reducers to the combineReducers
+const rootReducer = combineReducers({
+  meals: mealsReducer
+});
+
+//  create our store
+// createStore takes a reducer
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -29,7 +42,8 @@ export default function App() {
     );
   }
 
+  // we wrap Provider around root App component
   return (
-    <MainNavigator />
+    <Provider store={store}><MainNavigator /></Provider>
   );
 }
